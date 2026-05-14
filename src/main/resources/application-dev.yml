@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  main:
+    banner-mode: "off"
+api:
+  security:
+    user: "user"
+    password: "password"
+## OneBusAway Base URL
+  base-url: https://page.net
+  ## API KEY
+  key: "test"
+  ## Agency ID
+  agency: 1
