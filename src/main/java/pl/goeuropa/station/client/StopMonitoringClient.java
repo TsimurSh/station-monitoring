@@ -26,6 +26,11 @@ public class StopMonitoringClient {
 
     private final StationRepository repository = StationRepository.getInstance();
 
+    private final ObjectMapper mapper = new ObjectMapper()
+            .registerModule(new JavaTimeModule())
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
     public StopMonitoringClient(RestClient restClient) {
         this.restClient = restClient;
     }
@@ -91,12 +96,6 @@ public class StopMonitoringClient {
 
     private SiriDto getSiriDto(byte[] response) throws JsonProcessingException {
         String inUTF8 = new String(response, StandardCharsets.UTF_8);
-
-        ObjectMapper mapper = new ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                .enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
         return mapper.readValue(inUTF8, SiriDto.class);
     }
 

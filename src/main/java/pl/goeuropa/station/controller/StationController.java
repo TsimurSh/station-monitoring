@@ -32,18 +32,19 @@ public class StationController {
     public Map<String, SiriDto> getStopMonitoring(
             @RequestParam String key,
             @RequestParam(name = "_", required = false, defaultValue = "") String unixTimestamp,
-            @RequestParam String OperatorRef,
-            @RequestParam String MonitoringRef,
-            @RequestParam(defaultValue = "") String StopMonitoringDetailLevel,
-            @RequestParam int MinimumStopVisitsPerLine) {
+            @RequestParam(name = "OperatorRef") String operatorRef,
+            @RequestParam(name = "MonitoringRef") String monitoringRef,
+            @RequestParam(name = "StopMonitoringDetailLevel", defaultValue = "") String stopMonitoringDetailLevel,
+            @RequestParam(name = "MinimumStopVisitsPerLine") int minimumStopVisitsPerLine) {
 
-        try { return stationService.getStationMonitoring(
+        try {
+            return stationService.getStationMonitoring(
                     key,
                     unixTimestamp,
-                    OperatorRef,
-                    MonitoringRef,
-                    StopMonitoringDetailLevel,
-                    MinimumStopVisitsPerLine);
+                    operatorRef,
+                    monitoringRef,
+                    stopMonitoringDetailLevel,
+                    minimumStopVisitsPerLine);
         } catch (RuntimeException e) {
             if (e instanceof IllegalArgumentException) {
                 throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());

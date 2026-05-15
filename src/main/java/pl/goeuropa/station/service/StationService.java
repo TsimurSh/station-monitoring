@@ -9,7 +9,6 @@ import pl.goeuropa.station.client.StopMonitoringClient;
 import pl.goeuropa.station.dto.SiriDto;
 import pl.goeuropa.station.repository.StationRepository;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +34,7 @@ public class StationService {
             String operatorRef,
             String stopId,
             String detailLevel,
-            int minVisits) throws RuntimeException {
+            int minVisits) {
 
         if (obaKey.isBlank() || !obaKey.equals(key)) {
             log.debug("Unauthorized request with invalid key");
@@ -49,8 +48,7 @@ public class StationService {
 
 
     public Map<String, List<String>> getStationIds(String obaKey) {
-        Map<String, List<String>> response = new HashMap<>();
-        if (!obaKey.equals(key) || obaKey.isBlank()) {
+        if (obaKey.isBlank() || !obaKey.equals(key)) {
             log.debug("The key is not valid. Check the key!");
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "The key is not valid. Check the key!");
         }
