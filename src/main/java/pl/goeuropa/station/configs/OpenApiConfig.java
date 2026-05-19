@@ -17,10 +17,15 @@ public class OpenApiConfig {
                 .version("1.0");
 
         return new OpenAPI().info(info).components(new Components()
-                .addSecuritySchemes("basicAuth",
+                .addSecuritySchemes("hmac-signature",
                         new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("basic")
-                ));
+                                .type(SecurityScheme.Type.APIKEY)
+                                .in(SecurityScheme.In.HEADER)
+                                .name("x-signature"))
+                .addSecuritySchemes("hmac-timestamp",
+                        new SecurityScheme()
+                                .type(SecurityScheme.Type.APIKEY)
+                                .in(SecurityScheme.In.HEADER)
+                                .name("x-timestamp")));
     }
 }

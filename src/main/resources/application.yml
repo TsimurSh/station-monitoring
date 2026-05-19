@@ -5,9 +5,11 @@ spring:
     banner-mode: "off"
 api:
   security:
-    user: ""
-    password: ""
-## OneBusAway Base URL
+    ## HMAC secret shared with the frontend (Node) issuer
+    hmac:
+      secret: ${HMAC_SECRET}
+      time-window-ms: ${WINDOW_MS}
+  ## OneBusAway Base URL
   base-url: ${OBA_BASE_URL}
 ## API KEY
   key: ${API_KEY}

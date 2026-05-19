@@ -22,7 +22,7 @@ public class StopScheduleService {
                 ));
         var stations = repository.getStopIds();
         if (stations.isEmpty()) {
-            log.error("The problem occurred while extract stations for agency: {}", "${api.agency}");
+            log.error("Probably stations for agency: {} not exists", stopIds.get(0).split("_")[0]);
         } else
             log.info("Group and save {} stations with stop IDs: {}", repository.getStopIds().size(), repository.getStopIds());
     }

@@ -54,8 +54,8 @@ public class StationService {
         }
         var ids = repository.getStopIds();
         if (ids == null || ids.isEmpty()) {
-            log.debug("I/O error on GET stop IDs request: Check stations or connection to OBA API");
-            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE, "Absent stop IDs. Check base URL or connection");
+            log.debug("No stop IDs available — returning empty map");
+            return Map.of();
         }
         return ids;
     }

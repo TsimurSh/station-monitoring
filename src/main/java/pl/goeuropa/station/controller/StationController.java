@@ -2,8 +2,10 @@ package pl.goeuropa.station.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@SecurityRequirement(name = "basicAuth")
+@SecurityRequirements({
+        @SecurityRequirement(name = "hmac-signature"),
+        @SecurityRequirement(name = "hmac-timestamp")
+})
 @RestController
 @RequestMapping("/")
 public class StationController {
@@ -54,9 +59,14 @@ public class StationController {
 
     @GetMapping("stations")
     @Operation(summary = "Return available stations with stop IDs")
-    public Map<String, List<String>> getStationIds(@RequestParam(name = "key") String key
+    public ResponseEntity<Map<String, List<String>>> getStationIds(@RequestParam(name = "key") String key
     ) {
-        log.info("Get station IDs with stop IDs: {}", stationService.getStationIds(key));
-        return stationService.getStationIds(key);
+        Map<String, List<String>> ids = stationService.getStationIds(key);
+        if (ids.isEmpty()) {
+            log.info("No stations available — returning 204");
+            return ResponseEntity.noContent().build();
+        }
+        log.info("Get station IDs with stop IDs: {}", ids);
+        return ResponseEntity.ok(ids);
     }
 }

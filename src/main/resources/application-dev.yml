@@ -5,8 +5,9 @@ spring:
     banner-mode: "off"
 api:
   security:
-    user: "user"
-    password: "password"
+    hmac:
+      secret: "dev-hmac-secret"
+      time-window-ms: 60000
 ## OneBusAway Base URL
   base-url: https://page.net
   ## API KEY

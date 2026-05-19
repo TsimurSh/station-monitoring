@@ -1,0 +1,13 @@
+server:
+  port: 0
+spring:
+  main:
+    banner-mode: "off"
+api:
+  security:
+    hmac:
+      secret: "test-hmac-secret"
+      time-window-ms: 60000
+  base-url: "http://localhost"
+  key: "testkey"
+  agency: "TEST"
